@@ -7,5 +7,6 @@ class Solution(object):
                 return False
 
             farthest = max(farthest, i + nums[i])
+            i = max(farthest, i + nums[i])
 
         return True
