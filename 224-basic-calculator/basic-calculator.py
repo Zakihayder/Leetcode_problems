@@ -1,32 +1,31 @@
 class Solution(object):
     def calculate(self, s):
-        stack = []
-        result = 0      
-        num = 0         
-        sign = 1        
+        self.i = 0  # pointer into the string
 
-        for char in s:
-            if char.isdigit():
-                num = num * 10 + int(char)
-            
-            elif char in '+-':
-                result += sign * num 
-                num = 0
-                sign = 1 if char == '+' else -1
-            
-            elif char == '(':
-                stack.append(result)
-                stack.append(sign)
-                
-                result = 0
-                sign = 1
-            
-            elif char == ')':
-                result += sign * num   # apply last number before closing
-                num = 0
-                # pop sign and previous result, combine
-                result *= stack.pop()  # this is the sign before '('
-                result += stack.pop()  # this is the result before '('
-        
-        result += sign * num  # apply the final number
-        return result
+        def helper():
+            result = 0
+            num = 0
+            sign = 1
+
+            while self.i < len(s):
+                char = s[self.i]
+
+                if char.isdigit():
+                    num = num * 10 + int(char)
+                elif char in '+-':
+                    result += sign * num
+                    num = 0
+                    sign = 1 if char == '+' else -1
+                elif char == '(':
+                    self.i += 1
+                    num = helper()  # recursively evaluate the sub-expression
+                elif char == ')':
+                    result += sign * num
+                    return result
+
+                self.i += 1
+
+            result += sign * num
+            return result
+
+        return helper()
