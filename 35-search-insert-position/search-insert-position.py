@@ -1,8 +1,21 @@
 class Solution(object):
     def searchInsert(self, nums, target):
-        
-        for i in range(len(nums)):
-            if target == nums[i] or target < nums[i]:
-                return i
-        return len(nums)
-        
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: int
+        """
+        left, right = 0, len(nums) - 1
+
+        while left <= right:
+            mid = (left + right) // 2
+
+            if nums[mid] == target:
+                return mid
+            elif nums[mid] < target:
+                left = mid + 1
+            else:
+                right = mid - 1
+
+        # target not found — 'left' is the correct insertion point
+        return left
