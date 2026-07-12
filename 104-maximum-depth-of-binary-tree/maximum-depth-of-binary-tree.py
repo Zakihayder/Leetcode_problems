@@ -1,9 +1,20 @@
+from collections import deque
+
 class Solution(object):
     def maxDepth(self, root):
         if not root:
             return 0
         
-        left_depth = self.maxDepth(root.left)
-        right_depth = self.maxDepth(root.right)
+        queue = deque([root])
+        depth = 0
         
-        return 1 + max(left_depth, right_depth)
+        while queue:
+            depth += 1
+            for _ in range(len(queue)):  # process one full level at a time
+                node = queue.popleft()
+                if node.left:
+                    queue.append(node.left)
+                if node.right:
+                    queue.append(node.right)
+        
+        return depth
