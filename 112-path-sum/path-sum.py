@@ -3,9 +3,17 @@ class Solution(object):
         if not root:
             return False
 
-        if not root.left and not root.right:
-            return targetSum == root.val
+        stack = [(root, root.val)]
 
-        remaining = targetSum - root.val
-        return (self.hasPathSum(root.left, remaining) or
-                self.hasPathSum(root.right, remaining))
+        while stack:
+            node, curr_sum = stack.pop()
+
+            if not node.left and not node.right and curr_sum == targetSum:
+                return True
+
+            if node.left:
+                stack.append((node.left, curr_sum + node.left.val))
+            if node.right:
+                stack.append((node.right, curr_sum + node.right.val))
+
+        return False
