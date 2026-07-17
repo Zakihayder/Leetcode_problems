@@ -2,11 +2,6 @@ import bisect
 
 class Solution(object):
     def gcdValues(self, nums, queries):
-        """
-        :type nums: List[int]
-        :type queries: List[int]
-        :rtype: List[int]
-        """
         max_val = max(nums)
 
         # Step 1: count occurrences of each value
