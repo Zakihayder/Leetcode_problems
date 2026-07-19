@@ -1,10 +1,15 @@
 class Solution(object):
     def findPeakElement(self, nums):
-        for i in range(1,len(nums)-1):
-            if nums[i-1] < nums[i] and nums[i] > nums[i+1]:
-                return i
-        if len(nums) >= 2:
-            if nums[len(nums)-1] > nums[len(nums)-2]:
-                return len(nums)-1
-        return 0
-        
+        left, right = 0, len(nums) - 1
+
+        while left < right:
+            mid = (left + right) // 2
+
+            if nums[mid] < nums[mid + 1]:
+                # ascending at mid -> a peak must exist to the right
+                left = mid + 1
+            else:
+                # descending (or equal-then-descending) at mid -> a peak exists at mid or to the left
+                right = mid
+
+        return left  # left == right, pointing at a peak
