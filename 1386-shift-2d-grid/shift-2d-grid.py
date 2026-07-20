@@ -1,18 +1,38 @@
 class Solution(object):
     def shiftGrid(self, grid, k):
-
         m, n = len(grid), len(grid[0])
         total = m * n
-
         k %= total
 
-        result = [[0] * n for _ in range(m)]
+        if k == 0:
+            return grid
 
-        for i in range(m):
-            for j in range(n):
-                flat_index = i * n + j
-                new_flat_index = (flat_index + k) % total
-                new_i, new_j = divmod(new_flat_index, n)
-                result[new_i][new_j] = grid[i][j]
+        def get(idx):
+            i, j = divmod(idx, n)
+            return grid[i][j]
 
-        return result
+        def set_val(idx, val):
+            i, j = divmod(idx, n)
+            grid[i][j] = val
+
+        visited = 0
+        start = 0
+
+        while visited < total:
+            cycle_start = start
+            prev_val = get(start)
+            curr_idx = start
+
+            while True:
+                next_idx = (curr_idx + k) % total
+                next_val = get(next_idx)
+                set_val(next_idx, prev_val)
+                prev_val = next_val
+                curr_idx = next_idx
+                visited += 1
+                if curr_idx == cycle_start:
+                    break
+
+            start += 1
+
+        return grid
