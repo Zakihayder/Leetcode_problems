@@ -1,22 +1,24 @@
 class Solution(object):
     def combinationSum(self, candidates, target):
+        candidates.sort()
         ans = []
 
-        def backtrack(start, path, remain):
+        def dfs(start, remain, path):
             if remain == 0:
                 ans.append(path[:])
                 return
 
-            if remain < 0:
-                return
-
             for i in range(start, len(candidates)):
+                # No need to continue if candidate is too large
+                if candidates[i] > remain:
+                    break
+
                 path.append(candidates[i])
 
-                # i, not i+1, because we can reuse the same number
-                backtrack(i, path, remain - candidates[i])
+                # Reuse the same number
+                dfs(i, remain - candidates[i], path)
 
                 path.pop()
 
-        backtrack(0, [], target)
+        dfs(0, target, [])
         return ans
