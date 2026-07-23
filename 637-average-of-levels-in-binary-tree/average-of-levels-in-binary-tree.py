@@ -1,24 +1,22 @@
-from collections import deque
-
 class Solution(object):
     def averageOfLevels(self, root):
-        q = deque([root])
-        ans = []
+        sums = []
+        counts = []
 
-        while q:
-            level_size = len(q)
-            total = 0
+        def dfs(node, level):
+            if not node:
+                return
 
-            for _ in range(level_size):
-                node = q.popleft()
-                total += node.val
+            if level == len(sums):
+                sums.append(node.val)
+                counts.append(1)
+            else:
+                sums[level] += node.val
+                counts[level] += 1
 
-                if node.left:
-                    q.append(node.left)
+            dfs(node.left, level + 1)
+            dfs(node.right, level + 1)
 
-                if node.right:
-                    q.append(node.right)
+        dfs(root, 0)
 
-            ans.append(float(total) / level_size)
-
-        return ans
+        return [float(s) / c for s, c in zip(sums, counts)]
