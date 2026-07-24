@@ -1,15 +1,12 @@
 class Solution(object):
     def lowestCommonAncestor(self, root, p, q):
-        def LCA(node):
-            if not node or node == p or node == q:
-                return node
+        if not root or root == p or root == q:
+            return root
 
-            left = LCA(node.left)
-            right = LCA(node.right)
+        left = self.lowestCommonAncestor(root.left, p, q)
+        right = self.lowestCommonAncestor(root.right, p, q)
 
-            if left and right:
-                return node
+        if left and right:
+            return root
 
-            return left if left else right
-
-        return LCA(root)
+        return left if left else right
