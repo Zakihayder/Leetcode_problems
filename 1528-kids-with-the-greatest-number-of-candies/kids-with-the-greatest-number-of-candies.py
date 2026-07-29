@@ -1,11 +1,4 @@
-class Solution:
-    def kidsWithCandies(self, candies: List[int], extraCandies: int) -> List[bool]:
-        arr = []
-
-        for i in candies:
-            if i+extraCandies >= max(candies):
-                arr.append(True)
-            else:
-                arr.append(False)
-        return arr
-        
+class Solution(object):
+    def kidsWithCandies(self, candies, extraCandies):
+        mx = max(candies)
+        return [c + extraCandies >= mx for c in candies]
