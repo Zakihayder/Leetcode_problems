@@ -1,11 +1,8 @@
-class Solution:
-    def uniqueOccurrences(self, arr: List[int]) -> bool:
-        arr = Counter(arr)
-        stack = []
-        for start,end in arr.most_common():
-            if end in stack:
-                return False
-            stack.append(end)
-        return True
+class Solution(object):
+    def uniqueOccurrences(self, arr):
+        freq = {}
 
-        
+        for num in arr:
+            freq[num] = freq.get(num, 0) + 1
+
+        return len(freq.values()) == len(set(freq.values()))
