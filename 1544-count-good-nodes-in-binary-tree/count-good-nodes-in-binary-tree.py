@@ -7,13 +7,18 @@
 
 class Solution(object):
     def goodNodes(self, root):
+        self.ans = 0
+
         def dfs(node, mx):
             if not node:
-                return 0
+                return
 
-            good = 1 if node.val >= mx else 0
-            mx = max(mx, node.val)
+            if node.val >= mx:
+                self.ans += 1
+                mx = node.val
 
-            return good + dfs(node.left, mx) + dfs(node.right, mx)
+            dfs(node.left, mx)
+            dfs(node.right, mx)
 
-        return dfs(root, float("-inf"))
+        dfs(root, float("-inf"))
+        return self.ans
