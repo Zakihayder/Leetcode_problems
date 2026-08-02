@@ -9,14 +9,14 @@ class Solution(object):
     def longestZigZag(self, root):
         self.ans = 0
 
-        def dfs(node, left, right):
+        def dfs(node, l, r):
             if not node:
                 return
 
-            self.ans = max(self.ans, left, right)
+            self.ans = max(self.ans, l, r)
 
-            dfs(node.left, right + 1, 0)
-            dfs(node.right, 0, left + 1)
+            dfs(node.left, r + 1, 0)
+            dfs(node.right, 0, l + 1)
 
         dfs(root, 0, 0)
         return self.ans
