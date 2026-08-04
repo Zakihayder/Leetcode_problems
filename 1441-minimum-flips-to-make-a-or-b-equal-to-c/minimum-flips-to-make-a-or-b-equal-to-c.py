@@ -3,15 +3,10 @@ class Solution(object):
         ans = 0
 
         while a or b or c:
-            abit = a & 1
-            bbit = b & 1
-            cbit = c & 1
-
-            if cbit:
-                if not (abit or bbit):
-                    ans += 1
+            if c & 1:
+                ans += ((a | b) & 1) == 0
             else:
-                ans += abit + bbit
+                ans += (a & 1) + (b & 1)
 
             a >>= 1
             b >>= 1
