@@ -5,11 +5,7 @@ class Solution(object):
         while left < right:
             mid = (left + right) // 2
 
-            hours = 0
-            for pile in piles:
-                hours += (pile + mid - 1) // mid
-
-            if hours <= h:
+            if sum((pile + mid - 1) // mid for pile in piles) <= h:
                 right = mid
             else:
                 left = mid + 1
