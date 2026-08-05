@@ -2,13 +2,11 @@ import heapq
 
 class Solution(object):
     def maxScore(self, nums1, nums2, k):
-        pairs = sorted(zip(nums2, nums1), reverse=True)
-
         heap = []
         total = 0
         ans = 0
 
-        for n2, n1 in pairs:
+        for n2, n1 in sorted(zip(nums2, nums1), reverse=True):
             heapq.heappush(heap, n1)
             total += n1
 
