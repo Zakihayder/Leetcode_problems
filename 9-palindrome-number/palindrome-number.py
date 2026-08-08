@@ -1,16 +1,8 @@
-class Solution(object):
-    def isPalindrome(self, x):
+class Solution:
+    def isPalindrome(self, x: int) -> bool:
         if x < 0:
             return False
-        else:
-            string =str(x)
-            length = len(string)
-
-            for i in range(length/2):
-                if string[i] != string[length-1-i]:
-                    return False
+        elif x == int(str(x)[::-1]):
             return True
-
-
-
+        return False
         
