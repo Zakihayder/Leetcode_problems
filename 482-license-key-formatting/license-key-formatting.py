@@ -1,0 +1,14 @@
+class Solution(object):
+    def licenseKeyFormatting(self, s, k):
+        s = s.replace("-", "").upper()
+
+        first = len(s) % k
+        ans = []
+
+        if first:
+            ans.append(s[:first])
+
+        for i in range(first, len(s), k):
+            ans.append(s[i:i + k])
+
+        return "-".join(ans)
