@@ -1,34 +1,35 @@
 class Solution:
-    def countCompleteComponents(self, n, edges):
-        parent = list(range(n))
-        
-        def find(x):
-            while parent[x] != x:
-                parent[x] = parent[parent[x]]
-                x = parent[x]
-            return x
-        
-        def union(x, y):
-            px, py = find(x), find(y)
-            if px != py:
-                parent[px] = py
-        
-        for a, b in edges:
-            union(a, b)
-        
-        node_count = defaultdict(int)
-        edge_count = defaultdict(int)
-        
+    def countCompleteComponents(self, n: int, edges: List[List[int]]) -> int:
+        graph = [[] for _ in range(n)]
+
+        for u, v in edges:
+            graph[u].append(v)
+            graph[v].append(u)
+
+        visited = [False] * n
+        ans = 0
+
+        def dfs(node):
+            visited[node] = True
+
+            nodes = 1
+            degree_sum = len(graph[node])
+
+            for nei in graph[node]:
+                if not visited[nei]:
+                    a, b = dfs(nei)
+                    nodes += a
+                    degree_sum += b
+
+            return nodes, degree_sum
+
         for i in range(n):
-            node_count[find(i)] += 1
-        for a, b in edges:
-            edge_count[find(a)] += 1
-        
-        result = 0
-        for root in node_count:
-            V = node_count[root]
-            E = edge_count[root]
-            if E == V * (V - 1) // 2:
-                result += 1
-        
-        return result
+            if not visited[i]:
+                nodes, degree_sum = dfs(i)
+
+                edges_count = degree_sum // 2
+
+                if edges_count == nodes * (nodes - 1) // 2:
+                    ans += 1
+
+        return ans
